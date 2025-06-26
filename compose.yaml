@@ -4,6 +4,7 @@
 
 services:
   db:
+    restart: always
     image: mariadb:10.11.13-jammy
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=yes
@@ -17,6 +18,7 @@ services:
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
   app:
+    restart: always
     build:
       context: .
       args:
@@ -30,7 +32,7 @@ services:
       # for linux users, you can replace the host.docker.internal by 172.17.0.1 which is the
       # default docker address, because host.docker.internal does not work in linux - docker-compose
       - DATABASE_HOST=db
-      - LEGACY_DATABASE_HOST=host.docker.internal
+      - LEGACY_DATABASE_HOST=${LEGACY_DATABASE_HOST}
     # TODO: use compose watch feature instead: https://docs.docker.com/compose/how-tos/file-watch/
     volumes:
       - ./opal:/app/opal
