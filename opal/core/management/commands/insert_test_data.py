@@ -267,7 +267,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=_create_date(8, 5, 9),
             sex=SexType.FEMALE,
             ramq='SIML14550999',
-            legacy_id=54,
+            legacy_id=254,
             mrns=mrn_data['Lisa Simpson'],
         )
     else:
@@ -277,7 +277,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1958, 12, 13),
             sex=SexType.FEMALE,
             ramq='OPAL58621325',
-            legacy_id=92,
+            legacy_id=292,
             mrns=mrn_data['Laurie Opal'],
         )
         rory = _create_patient(
@@ -286,7 +286,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1972, 6, 11),
             sex=SexType.OTHER,
             ramq='OBRR72061199',
-            legacy_id=59,
+            legacy_id=259,
             mrns=mrn_data["Rory O'Brien"],
         )
         cara = _create_patient(
@@ -295,7 +295,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1974, 11, 25),
             sex=SexType.FEMALE,
             ramq='OBRC11257499',
-            legacy_id=96,
+            legacy_id=296,
             mrns=mrn_data["Cara O'Brien"],
         )
         john = _create_patient(
@@ -304,7 +304,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1985, 1, 1),
             sex=SexType.MALE,
             ramq='ABCD99988877',
-            legacy_id=93,
+            legacy_id=293,
             mrns=mrn_data['John Smith'],
         )
         richard = _create_patient(
@@ -313,7 +313,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1946, 5, 5),
             sex=SexType.MALE,
             ramq='SMIR05054616',
-            legacy_id=94,
+            legacy_id=294,
             mrns=mrn_data['Richard Smith'],
         )
         mike = _create_patient(
@@ -322,7 +322,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1972, 6, 11),
             sex=SexType.MALE,
             ramq='BROM72061199',
-            legacy_id=103,
+            legacy_id=303,
             mrns=mrn_data['Mike Brown'],
         )
         kathy = _create_patient(
@@ -331,7 +331,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1974, 11, 25),
             sex=SexType.FEMALE,
             ramq='BROK11257499',
-            legacy_id=102,
+            legacy_id=302,
             mrns=mrn_data['Kathy Brown'],
         )
         valerie = _create_patient(
@@ -340,7 +340,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1979, 6, 21),
             sex=SexType.MALE,
             ramq='SOLV06217999',
-            legacy_id=99,
+            legacy_id=299,
             mrns=mrn_data['Valerie Solanas'],
         )
         pete = _create_patient(
@@ -349,7 +349,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1971, 6, 11),
             sex=SexType.MALE,
             ramq='BOYP06117199',
-            legacy_id=100,
+            legacy_id=300,
             mrns=mrn_data['Pete Boyd'],
         )
         martin = _create_patient(
@@ -358,7 +358,7 @@ def _create_test_data(institution_option: InstitutionOption) -> None:  # noqa: P
             date_of_birth=date(1965, 4, 23),
             sex=SexType.MALE,
             ramq='CURM04236599',
-            legacy_id=101,
+            legacy_id=301,
             mrns=mrn_data['Martin Curley'],
         )
 
