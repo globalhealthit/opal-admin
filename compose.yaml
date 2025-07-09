@@ -14,6 +14,7 @@ services:
       - MYSQL_TCP_PORT=${DATABASE_PORT}
     volumes:
       - ./docker/mariadb/scripts:/docker-entrypoint-initdb.d
+      - mariadbdata:/var/lib/mysql
     # expose DB locally to be able to access it through venv
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
@@ -38,7 +39,29 @@ services:
       - ./opal:/app/opal
       - ./config:/app/config
       - ./locale:/app/locale
-    ports:
+    expose:
       - 8000:8000
     depends_on:
       - db
+  nginx:
+    env_file:
+      - .env
+    container_name: nginx
+    build:
+      context: ./services/nginx
+      args:
+        NGINX_CONF: nginx_ec2.conf
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/www/.well-known/acme-challenge:/var/www/.well-known/acme-challenge
+      - /etc/letsencrypt/live/opaladmin.shoprideon.com/fullchain.pem:/etc/ssl/certs/fullchain.pem
+      - /etc/letsencrypt/live/opaladmin.shoprideon.com/privkey.pem:/etc/ssl/private/privkey.pem
+    depends_on:
+      - app
+
+volumes:
+  mariadbdata: {}
