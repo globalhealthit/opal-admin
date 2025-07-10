@@ -4,8 +4,11 @@
 
 """This module is an API view that returns the encryption value required to handle listener's registration requests."""
 
+import os
+import smtplib
 import datetime as dt
 from typing import TYPE_CHECKING, Any
+from email.message import EmailMessage
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -313,13 +316,28 @@ class VerifyEmailView(RetrieveRegistrationCodeMixin, APIView):
             'email/verification_code.txt',
             context,
         )
-
-        send_mail(
-            _('Opal Verification Code'),
-            email_plain,
-            settings.EMAIL_FROM_REGISTRATION,
-            [email_verification.email],
-        )
+        port = os.environ.get('EMAIL_PORT')
+        smtp_server = os.environ.get('EMAIL_HOST')
+        username = os.environ.get('EMAIL_HOST_USER')
+        password = os.environ.get('EMAIL_HOST_PASSWORD')
+        message = email_plain
+        msg = EmailMessage()
+        msg['Subject'] = str(_('Opal Verification Code'))
+        msg['From'] = settings.EMAIL_FROM_REGISTRATION
+        msg['To'] = [email_verification.email]
+        msg.set_content(message)
+        try:
+            with smtplib.SMTP(smtp_server, port) as server:
+                server.starttls()
+                server.login(
+                    username, password
+                )
+                server.send_message(msg)
+        except Exception as e:
+            print(f"{e} exception occured.", flush=True)
+            raise serializers.ValidationError({
+                'detail': f'Failed to send email: {e}'}
+            )
 
 
 @extend_schema(
@@ -479,12 +497,29 @@ class RegistrationCompletionView(APIView):
                 'email/confirmation_email.txt',
                 context,
             )
-            send_mail(
-                gettext('Thank you for registering for Opal!'),
-                email_plain,
-                settings.EMAIL_FROM_REGISTRATION,
-                [email],
-            )
+            port = os.environ.get('EMAIL_PORT')
+            smtp_server = os.environ.get('EMAIL_HOST')
+            username = os.environ.get('EMAIL_HOST_USER')
+            password = os.environ.get('EMAIL_HOST_PASSWORD')
+            message = email_plain
+            msg = EmailMessage()
+            msg['Subject'] = gettext('Thank you for registering for Opal!')
+            msg['From'] = settings.EMAIL_FROM_REGISTRATION
+            msg['To'] = [email]
+            msg.set_content(message)
+            try:
+                with smtplib.SMTP(smtp_server, port) as server:
+                    server.starttls()
+                    server.login(
+                        username, password
+                    )
+                    server.send_message(msg)
+            except Exception as e:
+                print(f"{e} exception occured.", flush=True)
+                raise serializers.ValidationError({
+                    'detail': f'Failed to send email: {e}'}
+                )
+
 
     def _get_serializer_class(self, *args: Any, **kwargs: Any) -> type[serializers.BaseSerializer[RegistrationCode]]:
         """

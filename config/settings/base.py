@@ -372,7 +372,7 @@ X_FRAME_OPTIONS = 'DENY'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
-EMAIL_FROM_REGISTRATION = 'Opal Registration <registration@opalmedapps.ca>'
+EMAIL_FROM_REGISTRATION = 'Opal Registration <noreply@opaladmin.shoprideon.com>'
 
 # ADMIN
 # ------------------------------------------------------------------------------
