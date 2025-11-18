@@ -4,6 +4,7 @@
 
 services:
   db:
+    restart: always
     image: mariadb:10.11.15-jammy
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=yes
@@ -13,10 +14,12 @@ services:
       - MYSQL_TCP_PORT=${DATABASE_PORT}
     volumes:
       - ./docker/mariadb/scripts:/docker-entrypoint-initdb.d
+      - mariadbdata:/var/lib/mysql
     # expose DB locally to be able to access it through venv
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
   app:
+    restart: always
     build:
       context: .
       args:
@@ -30,13 +33,35 @@ services:
       # for linux users, you can replace the host.docker.internal by 172.17.0.1 which is the
       # default docker address, because host.docker.internal does not work in linux - docker-compose
       - DATABASE_HOST=db
-      - LEGACY_DATABASE_HOST=host.docker.internal
+      - LEGACY_DATABASE_HOST=${LEGACY_DATABASE_HOST}
     # TODO: use compose watch feature instead: https://docs.docker.com/compose/how-tos/file-watch/
     volumes:
       - ./opal:/app/opal
       - ./config:/app/config
       - ./locale:/app/locale
-    ports:
+    expose:
       - 8000:8000
     depends_on:
       - db
+  nginx:
+    env_file:
+      - .env
+    container_name: nginx
+    build:
+      context: ./services/nginx
+      args:
+        NGINX_CONF: nginx_ec2.conf
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/www/.well-known/acme-challenge:/var/www/.well-known/acme-challenge
+      - /etc/letsencrypt/live/opaladmin.shoprideon.com/fullchain.pem:/etc/ssl/certs/fullchain.pem
+      - /etc/letsencrypt/live/opaladmin.shoprideon.com/privkey.pem:/etc/ssl/private/privkey.pem
+    depends_on:
+      - app
+
+volumes:
+  mariadbdata: {}
