@@ -50,6 +50,7 @@ class PatientNotFoundError(Exception):
 
 def _retrieve(url: str, data: Any | None) -> requests.Response:
     response = requests.post(url, data=data, timeout=5)
+    # response = requests.post(url, data=data, timeout=5, verify=False)
 
     if response.status_code == HTTPStatus.NOT_FOUND:
         raise PatientNotFoundError()
