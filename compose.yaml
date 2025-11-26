@@ -58,10 +58,11 @@ services:
       - 443:443
     volumes:
       - /var/www/.well-known/acme-challenge:/var/www/.well-known/acme-challenge
-      - /etc/letsencrypt/live/opaladmin.shoprideon.com/fullchain.pem:/etc/ssl/certs/fullchain.pem
-      - /etc/letsencrypt/live/opaladmin.shoprideon.com/privkey.pem:/etc/ssl/private/privkey.pem
+      - /etc/letsencrypt/live/mycarexadmin.gheit.co/fullchain.pem:/etc/ssl/certs/fullchain.pem
+      - /etc/letsencrypt/live/mycarexadmin.gheit.co/privkey.pem:/etc/ssl/private/privkey.pem
     depends_on:
       - app
 
 volumes:
   mariadbdata: {}
+

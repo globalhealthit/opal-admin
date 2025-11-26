@@ -22,7 +22,7 @@ SECRET_KEY = env.str(
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
-    '44.227.113.66', 'opaladmin.shoprideon.com', '.localhost', '127.0.0.1', '[::1]', 'host.docker.internal'
+    '44.227.113.66', 'mycarexadmin.gheit.co', '.localhost', '127.0.0.1', '[::1]', 'host.docker.internal'
 ]
 
 # CACHES
